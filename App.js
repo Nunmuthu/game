@@ -26,6 +26,7 @@ import {
 import FortuneTeller from './src/screens/fortuneTeller';
 import EnableDiableUser from './src/screens/enableDisableUser';
 import GroupSelection from './src/screens/groupSelction';
+import ParentContainer from './src/screens/parent';
 
 const App: () => React$Node = () => {
   return (
@@ -33,12 +34,8 @@ const App: () => React$Node = () => {
       <StatusBar barStyle="dark-content" />
       {/* <SafeAreaView> */}
       <ScrollView>
-        {/* // contentInsetAdjustmentBehavior="automatic" */}
-        {/* style={styles.scrollView}> */}
-        {/* <Header /> */}
+        <ParentContainer />
         {/* <FortuneTeller /> */}
-        <EnableDiableUser />
-        <GroupSelection />
       </ScrollView>
       {/* </SafeAreaView> */}
     </>

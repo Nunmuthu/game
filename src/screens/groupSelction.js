@@ -19,6 +19,7 @@ class GroupSelection extends React.Component {
       let index = dummyUsers.findIndex(e => randomElement.userId === e.userId);
       dummyUsers.splice(index, 1);
     }
+    console.log(this.group);
     this.setState({reload: true});
   }
   render() {

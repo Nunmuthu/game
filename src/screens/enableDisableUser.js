@@ -1,8 +1,22 @@
 import React from 'react';
 import {View, Text, Switch, Button} from 'react-native';
 import {users} from '../data/getUsers';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import axios from 'axios';
 
 class EnableDiableUser extends React.Component {
+  constructor() {
+    axios
+      .get(
+        'http://10.112.218.35:8091/api/SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27'
+      )
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        console.warn(JSON.stringify(err));
+      });
+  }
   changedUsers = users;
   state = {
     reload: false,
@@ -46,11 +60,16 @@ class EnableDiableUser extends React.Component {
             backgroundColor: 'white',
             marginHorizontal: 5,
             padding: 6,
-            alignItems: "center",
-            fontSize: 40
+            alignItems: 'center',
+            fontSize: 40,
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
           key={e.Name}>
-          <Text style={{fontSize:30}}>{e.Name}</Text>
+          {/* <FontAwesome5.Button name={'comments'} solid /> */}
+          <Button title="" />
+          <Text style={{fontSize: 30}}>{e.Name}</Text>
           {chooseButton}
         </View>
       );
@@ -59,7 +78,10 @@ class EnableDiableUser extends React.Component {
       <View>
         {enableOptionEachUser}
         <View>
-          <Button onPress={() => console.log(this.changedUsers)} title="showOutput" />
+          <Button
+            onPress={() => console.log(this.changedUsers)}
+            title="showOutput"
+          />
         </View>
       </View>
     );
