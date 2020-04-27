@@ -47,7 +47,7 @@ class EnableDiableUser extends React.Component {
       //   );
       let chooseButton = (
         <Switch
-          value={!e.IsActive}
+          value={e.IsActive}
           onValueChange={() => this.changeUserData(e.UserId)}
         />
       );
