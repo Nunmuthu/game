@@ -1,12 +1,14 @@
 import React from 'react';
 import {View, Text, Switch, Button} from 'react-native';
-import {users} from '../data/getUsers';
+// import {users} from '../data/getUsers';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ApiService from '../services/api.service';
+import {urlList} from '../data/urlList';
 
 class EnableDiableUser extends React.Component {
   api = new ApiService();
-  changedUsers = users;
+  // changedUsers = users;
+  changedUsers = [];
   state = {
     reload: false,
   };
@@ -14,9 +16,7 @@ class EnableDiableUser extends React.Component {
   constructor() {
     super();
     this.api
-      .get(
-        'SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27',
-      )
+      .get(urlList.getUsers)
       .then(data => {
         console.log(data);
         this.changedUsers = data.data;
@@ -34,6 +34,22 @@ class EnableDiableUser extends React.Component {
     this.changedUsers[index].IsActive = !this.changedUsers[index].IsActive;
     this.setState({reload: !this.state.reload});
   };
+
+  sendOutputToServer() {
+    console.log(this.changedUsers);
+    let activeUserList = [];
+    let inActiveUserList = [];
+    this.changedUsers.map(e => {
+      e.IsActive
+        ? activeUserList.push(e.UserId)
+        : inActiveUserList.push(e.UserId);
+    });
+    let activeUserId = activeUserList.join(',');
+    let inActiveUserId = inActiveUserList.join(',');
+    console.log(activeUserId);
+    console.log(inActiveUserId);
+    this.api.get(urlList.sendActiveUsers + activeUserId);
+  }
   render() {
     let enableOptionEachUser = this.changedUsers.map(e => {
       //   let chooseButton = e.isDisabled ? (
@@ -85,7 +101,7 @@ class EnableDiableUser extends React.Component {
         {enableOptionEachUser}
         <View>
           <Button
-            onPress={() => console.log(this.changedUsers)}
+            onPress={() => this.sendOutputToServer()}
             title="showOutput"
           />
         </View>
