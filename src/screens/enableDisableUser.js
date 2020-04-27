@@ -6,6 +6,7 @@ import axios from 'axios';
 
 class EnableDiableUser extends React.Component {
   constructor() {
+    super();
     axios
       .get(
         'http://10.112.218.35:8091/api/SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27'
