@@ -6,29 +6,32 @@ import ApiService from '../services/api.service';
 
 class EnableDiableUser extends React.Component {
   api = new ApiService();
+  changedUsers = users;
+  state = {
+    reload: false,
+  };
 
   constructor() {
     super();
     this.api
       .get(
-        'SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27'
+        'SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27',
       )
       .then(data => {
         console.log(data);
+        this.changedUsers = data.data;
+        this.setState({reload: !this.state.reload});
       })
       .catch(err => {
         console.warn(JSON.stringify(err));
       });
   }
-  changedUsers = users;
-  state = {
-    reload: false,
-  };
-  changeUserData = userId => {
-    let index = this.changedUsers.findIndex(e => e.userId === userId);
+
+  changeUserData = UserId => {
+    let index = this.changedUsers.findIndex(e => e.UserId === UserId);
     console.log(this.changedUsers);
     console.log(index);
-    this.changedUsers[index].isDisabled = !this.changedUsers[index].isDisabled;
+    this.changedUsers[index].IsActive = !this.changedUsers[index].IsActive;
     this.setState({reload: !this.state.reload});
   };
   render() {
@@ -44,8 +47,8 @@ class EnableDiableUser extends React.Component {
       //   );
       let chooseButton = (
         <Switch
-          value={e.isDisabled}
-          onValueChange={() => this.changeUserData(e.userId)}
+          value={!e.IsActive}
+          onValueChange={() => this.changeUserData(e.UserId)}
         />
       );
       return (
@@ -69,10 +72,10 @@ class EnableDiableUser extends React.Component {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}
-          key={e.Name}>
+          key={e.UserName}>
           {/* <FontAwesome5.Button name={'comments'} solid /> */}
           <Button title="" />
-          <Text style={{fontSize: 30}}>{e.Name}</Text>
+          <Text style={{fontSize: 30}}>{e.UserName}</Text>
           {chooseButton}
         </View>
       );
