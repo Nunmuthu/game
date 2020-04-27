@@ -28,7 +28,7 @@ class ParentContainer extends React.Component {
             justifyContent: 'space-between',
             padding: 20,
           }}>
-          <Button title="Main" onPress={() => this.changeScreen('main')} />
+          {/* <Button title="Main" onPress={() => this.changeScreen('main')} /> */}
           <Button title="EDUSER" onPress={() => this.changeScreen('edUser')} />
           <Button
             title="RPicker"

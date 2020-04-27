@@ -2,14 +2,16 @@ import React from 'react';
 import {View, Text, Switch, Button} from 'react-native';
 import {users} from '../data/getUsers';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import axios from 'axios';
+import ApiService from '../services/api.service';
 
 class EnableDiableUser extends React.Component {
+  api = new ApiService();
+
   constructor() {
     super();
-    axios
+    this.api
       .get(
-        'http://10.112.218.35:8091/api/SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27'
+        'SpinnerAppController/GetAllActiveUsers?loggedinUser=%27AppTestUser%27'
       )
       .then(data => {
         console.log(data);
